@@ -33,6 +33,8 @@ public static class Program
             Console.WriteLine("1 - Primal Simplex");
             Console.WriteLine("2 - Revised Primal Simplex");
             Console.WriteLine("3 - Cutting Plane");
+            Console.WriteLine("4 - Branch & Bound Simplex");
+            Console.WriteLine("5 - Branch & Bound Knapsack");
             Console.Write("Selection: ");
 
             string choice = Console.ReadLine() ?? "1";
@@ -58,7 +60,6 @@ public static class Program
                         $"Optimal value: {Math.Round(revisedResult.ObjectiveValue, 3)}");
                 }
             }
-
             else if (choice == "3")
             {
                 var result =
@@ -78,7 +79,36 @@ public static class Program
                         $"Optimal value: {Math.Round(result.FinalResult.ObjectiveValue, 3)}");
                 }
             }
+            else if (choice == "4")
+            {
+                var bbResult = BranchAndBoundSimplex.Solve(model);
 
+                Console.WriteLine($"Done. Nodes Explored: {bbResult.ExploredNodes.Count}");
+                if (bbResult.BestNode?.Result != null)
+                {
+                    Console.WriteLine(
+                        $"Optimal Objective Value: {Math.Round(bbResult.BestNode.Result.ObjectiveValue, 3)}");
+                }
+                else
+                {
+                    Console.WriteLine("No integer-feasible solution found.");
+                }
+            }
+            else if (choice == "5")
+            {
+                var knapsackResult = BranchAndBoundKnapsack.Solve(model);
+
+                Console.WriteLine($"Done. Nodes Explored: {knapsackResult.ExploredNodes.Count}");
+                if (knapsackResult.BestNode != null)
+                {
+                    Console.WriteLine(
+                        $"Optimal Objective Value: {Math.Round(knapsackResult.BestObjectiveValue, 3)}");
+                }
+                else
+                {
+                    Console.WriteLine("No integer-feasible solution found.");
+                }
+            }
             else
             {
                 var primalResult =
