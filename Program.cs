@@ -83,6 +83,8 @@ public static class Program
             {
                 var bbResult = BranchAndBoundSimplex.Solve(model);
 
+                BranchAndBoundResultWriter.WriteSimplex(outputPath, model, bbResult);
+
                 Console.WriteLine($"Done. Nodes Explored: {bbResult.ExploredNodes.Count}");
                 if (bbResult.BestNode?.Result != null)
                 {
@@ -94,9 +96,12 @@ public static class Program
                     Console.WriteLine("No integer-feasible solution found.");
                 }
             }
+
             else if (choice == "5")
             {
                 var knapsackResult = BranchAndBoundKnapsack.Solve(model);
+
+                BranchAndBoundResultWriter.WriteKnapsack(outputPath, model, knapsackResult);
 
                 Console.WriteLine($"Done. Nodes Explored: {knapsackResult.ExploredNodes.Count}");
                 if (knapsackResult.BestNode != null)
